@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { AppShell, Burger, Image, Flex, Text, Container } from '@mantine/core';
+import { useDisclosure } from '@mantine/hooks';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { MainPageView } from './pages/main-page/mainPageView';
+import { MoviesView } from './pages/movies/MoviesView'
+import { MovieDetailView } from './pages/movie-detail/MovieDetailView';
+import { NotFoundPage } from './pages/404/NotFoundPage';
+import { RatedView } from './pages/rated/RatedView';
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [opened, { toggle }] = useDisclosure();
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <AppShell withBorder={false}>
+      <Flex mih={0} direction="row" align="flex-start" wrap="wrap">
+        <AppShell.Header className='header'>
+          <Flex mih={0} gap="xs" justify="flex-start" align="center" direction="row" wrap="wrap">
+            <Image radius="md" w="auto" h="40px" fit="cover" src="./src/assets/logo.svg" />
+            <Text c="#9854F6" size="lg" fw={700}>ArrowFlicks</Text>
+          </Flex>
+          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="lg" />
+        </AppShell.Header>
+
+        <AppShell.Main className="main">
+          <Container>
+            <Router>
+              <Routes>
+                <Route path="/" element={<MainPageView />} />
+                <Route path="movie/*" element={<MoviesRoutes />} />
+                <Route path="rated-movies" element={<RatedView />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Router>
+          </Container>
+        </AppShell.Main>
+      </Flex>
+    </AppShell>
+  );
 }
 
-export default App
+const MoviesRoutes = () => {
+  return (
+    <Routes>
+      <Route path="/" element={<MoviesView />} />
+      <Route path=":id" element={<MovieDetailView />} />
+    </Routes>
+  );
+};
