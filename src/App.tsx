@@ -1,16 +1,33 @@
 import './App.css';
-import { AppShell, Burger, Image, Flex, Text, Container } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { AppShell, Burger, Image, Flex, Text } from '@mantine/core';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { MainPageView } from './pages/main-page/mainPageView';
 import { MoviesView } from './pages/movies/MoviesView'
 import { MovieDetailView } from './pages/movie-detail/MovieDetailView';
 import { NotFoundPage } from './pages/404/NotFoundPage';
 import { RatedView } from './pages/rated/RatedView';
+import { useEffect, useState } from 'react';
 
 export default function App() {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, setOpened] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  const toggleMenu = () => {
+    setOpened(!opened);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 968);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <AppShell withBorder={false}>
       <Flex mih={0} direction="row" align="flex-start" wrap="wrap">
@@ -19,11 +36,22 @@ export default function App() {
             <Image radius="md" w="auto" h="40px" fit="cover" src="./src/assets/logo.svg" />
             <Text c="#9854F6" size="lg" fw={700}>ArrowFlicks</Text>
           </Flex>
-          <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="lg" />
+          {isSmallScreen && (
+            <Burger opened={opened} onClick={toggleMenu} aria-label="Toggle navigation" />
+          )}
+
+          {opened && (
+            <nav>
+              <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/rated-movies">Rated Movie</a></li>
+              </ul>
+            </nav>
+          )}
+
         </AppShell.Header>
 
         <AppShell.Main className="main">
-          <Container>
             <Router>
               <Routes>
                 <Route path="/" element={<MainPageView />} />
@@ -32,7 +60,6 @@ export default function App() {
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
             </Router>
-          </Container>
         </AppShell.Main>
       </Flex>
     </AppShell>

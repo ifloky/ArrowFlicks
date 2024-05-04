@@ -12,7 +12,7 @@ interface Movie {
 export default function CardMovie(data: Movie) {
 
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder style={{ maxWidth: 300 }}>
+    <Card shadow="sm" padding="lg" radius="md" withBorder  miw={300} maw={320} style={{flex: '1'}}>
       <Image
         src={data.imageLing ? data.imageLing : 'https://b1.filmpro.ru/c/266988.700xp.jpg'}
         height={160}
@@ -21,16 +21,17 @@ export default function CardMovie(data: Movie) {
       <Flex justify="space-between" mt="md" mb="xs" direction='column'>
         <Text fw={500} c="#9854F6">{data.name ? data.name : 'Unknown Name'}</Text>
         <Text fw={300} c="dimmed">{data.year ? data.year : 'Unknown year'}</Text>
-        <Group>
+        <Group >
           <Image
-            src="../../assets/star.svg"
+            height={20}
+            src="./src/assets/star.svg"
           />
           <Text fw={500}>{data.rate ? data.rate : '0.0'}</Text>
           <Text fw={500} c="dimmed">({data.ratePeople ? data.ratePeople : '0.0'})</Text>
         </Group>
       </Flex>
 
-      <Text size="sm" c="dimmed">
+      <Text size="sm" c="dimmed" mah={105} style={{ overflow: 'hidden' }}>
         With Fjord Tours you can explore more of the magical fjord landscapes with tours and
         activities on and around the fjords of Norway
       </Text>

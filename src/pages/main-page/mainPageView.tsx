@@ -18,7 +18,31 @@ export const MainPageView = () => {
       year: 2010,
       rate: 8.8,
       ratePeople: 1981603,
-      imageLing: "https://example.com/inception.jpg",
+      imageLing: "https://b1.filmpro.ru/c/266988.700xp.jpg",
+      description: "A thief who enters the dreams of others to steal secrets from their subconscious."
+    },
+    {
+      name: "Inception",
+      year: 2010,
+      rate: 8.8,
+      ratePeople: 1981603,
+      imageLing: "https://b1.filmpro.ru/c/266988.700xp.jpg",
+      description: "A thief who enters the dreams of others to steal secrets from their subconscious."
+    },
+    {
+      name: "Inception",
+      year: 2010,
+      rate: 8.8,
+      ratePeople: 1981603,
+      imageLing: "https://b1.filmpro.ru/c/266988.700xp.jpg",
+      description: "A thief who enters the dreams of others to steal secrets from their subconscious."
+    },
+    {
+      name: "Inception",
+      year: 2010,
+      rate: 8.8,
+      ratePeople: 1981603,
+      imageLing: "https://b1.filmpro.ru/c/266988.700xp.jpg",
       description: "A thief who enters the dreams of others to steal secrets from their subconscious."
     },
   ];
@@ -26,8 +50,8 @@ export const MainPageView = () => {
   return (
     <div>
       <h1>Movies</h1>
-      <SearchForm />
-      <Flex>
+      <SearchForm  />
+      <Flex gap='lg' wrap="wrap" >
         {data.map((movie, index) => (
           <CardMovie key={index} {...movie} />
         ))}

@@ -1,10 +1,10 @@
-import { Button, Container, Flex, NumberInput, Select } from '@mantine/core';
+import { Button, Flex, NumberInput, Select } from '@mantine/core';
 
 const SearchForm = () => {
 
   return (
     <>
-      <form>
+      <form style={{maxWidth: 'calc(100vw - 370px)', marginBottom: '20px', flex: 1}}>
         <Flex gap="md"
           align="flex-end"
         >
@@ -16,7 +16,7 @@ const SearchForm = () => {
             label="Release year"
             placeholder="Pick value"
             data={['2020', '2021', '2022', '2023']} />
-          <Container>
+          <div>
             Rating:
             <Flex gap="lg">
               <NumberInput
@@ -24,7 +24,7 @@ const SearchForm = () => {
               <NumberInput
                 placeholder="Input placeholder" />
             </Flex>
-          </Container>
+          </div>
           <Button variant="outline">Reset</Button>
         </Flex>
       </form >
