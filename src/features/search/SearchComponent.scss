@@ -1,0 +1,21 @@
+.search-container {
+  display: flex !important;
+  align-items: center;
+  border-radius: 9px !important;
+  padding: 9px !important;
+  background-color: #fff !important;
+}
+
+.text-input {
+  border: none !important;
+  flex: 1 !important;
+  min-width: 300px;
+}
+
+.search-button {
+  margin-left: 5px !important;
+  background-color: var(--purple500) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 9px !important;
+}

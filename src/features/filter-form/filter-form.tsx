@@ -1,12 +1,13 @@
 import { Button, Flex, NumberInput, Select } from '@mantine/core';
 
-const SearchForm = () => {
+const FilterForm = () => {
 
   return (
     <>
-      <form style={{maxWidth: 'calc(100vw - 370px)', marginBottom: '20px', flex: 1}}>
+      <form style={{ width: "100%", marginBottom: '20px', flex: 1 }}>
         <Flex gap="md"
           align="flex-end"
+          justify="flex-start"
         >
           <Select
             label="Genres:"
@@ -25,11 +26,11 @@ const SearchForm = () => {
                 placeholder="Input placeholder" />
             </Flex>
           </div>
-          <Button variant="outline">Reset</Button>
+          <Button variant="outline" style={{ minWidth: "75px" }}>Reset</Button>
         </Flex>
       </form >
     </>
   );
 };
 
-export default SearchForm;
+export default FilterForm;

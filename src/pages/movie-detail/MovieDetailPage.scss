@@ -1,0 +1,38 @@
+.movie-detail-container {
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.movie-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9854F6;
+  margin: 0;
+}
+
+.movie-info {
+  font-size: 18px;
+  margin-bottom: 0px;
+  font-weight: 600;
+}
+
+.movie-info span {
+  display: inline-block;
+  width: 150px;
+  font-weight: 300;
+  color: var(--gray600);
+}
+
+.movie-description {
+  font-size: 16px;
+  color: #444;
+  margin-top: 10px;
+}
+
+.movie-date {
+  color: var(--gray600);
+  margin: 0;
+}
