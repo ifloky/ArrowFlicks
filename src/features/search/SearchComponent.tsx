@@ -21,7 +21,7 @@ const SearchComponent = () => {
       />
       <Button
         onClick={handleSearch}
-        className="search-button"
+        className="purple-btn"
       >
         Search
       </Button>

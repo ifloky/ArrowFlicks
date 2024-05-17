@@ -21,9 +21,13 @@ const FilterForm = () => {
             Rating:
             <Flex gap="lg">
               <NumberInput
-                placeholder="Input placeholder" />
+                placeholder="Input placeholder"
+                min={0}
+                max={10} />
               <NumberInput
-                placeholder="Input placeholder" />
+                placeholder="Input placeholder"
+                min={0}
+                max={10} />
             </Flex>
           </div>
           <Button variant="outline" style={{ minWidth: "75px" }}>Reset</Button>

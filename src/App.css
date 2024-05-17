@@ -11,3 +11,17 @@
   max-width: 100% !important;
   background-color: #F5F5F6;
 }
+
+.purple-btn {
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin-left: 5px !important;
+  background-color: var(--purple500) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 9px !important;
+  padding: 10px 20px;
+  max-width: 150px;
+  text-decoration: none;
+}
