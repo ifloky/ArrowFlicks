@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://api.themoviedb.org/3/movie/550?api_key=2e4ae5c75cd2edc8a208bd921ff797fa',
+        target: 'https://api.themoviedb.org/3',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
         headers: {
