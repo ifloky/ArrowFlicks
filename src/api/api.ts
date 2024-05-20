@@ -2,6 +2,16 @@ import axios from 'axios';
 
 const API_BASE_URL = '/api';
 
+export const getMovieById = async (movieId: number) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/movie/${movieId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching movie data by ID:', error);
+    throw error;
+  }
+};
+
 export const getMovies = async (page: number) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/movie/popular`, {

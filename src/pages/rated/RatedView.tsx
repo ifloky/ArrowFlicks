@@ -1,97 +1,80 @@
+import { useState, useEffect } from "react";
 import { Flex, Pagination, Button, Text } from "@mantine/core";
 import SearchComponent from "../../features/search/SearchComponent";
-import { useState } from "react";
 import CardMovie from "../../features/card/card";
+import { getMovieById } from "../../api/api";
 
 interface Movie {
+  original_title: string;
+  id: number;
+  title: string;
+  overview: string;
+  poster_path: string;
+  release_date: string;
+  vote_average: number;
+  genre_ids: number[];
+  genres: Genre[]
+}
+
+interface Genre {
   id: number;
   name: string;
-  year: number;
-  rate: number;
-  ratePeople: number;
-  imageLing: string;
-  genres: string;
-  count: string;
 }
 
 export const RatedView = () => {
-  const [activePage, setPage] = useState(1);
+  const FILMS_PER_PAGE = 20;
+  const [activePage, setActivePage] = useState(1);
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
 
-  const getTotalCountPage = () => {
-    return 10;
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    const fetchFavoriteMovies = async () => {
+      const moviesData = await Promise.all(favorites.map((movieId: number) => getMovieById(movieId)));
+      setFavoriteMovies(moviesData);
+    };
+    fetchFavoriteMovies();
+  }, []);
+
+  const handlePageChange = (page: number) => {
+    setActivePage(page);
   };
 
-  const data: Movie[] = [
-    {
-      id: 4,
-      name: "Inception",
-      year: 2010,
-      rate: 8.8,
-      ratePeople: 1981603,
-      imageLing: "./src/assets/1.jpg",
-      genres: "Drama, Crime",
-      count: "9",
-    },
-    {
-      id: 5,
-      name: "Inception",
-      year: 2010,
-      rate: 8.8,
-      ratePeople: 1981603,
-      imageLing: "./src/assets/1.jpg",
-      genres: "Drama, Crime",
-      count: "9",
-    },
-    {
-      id: 6,
-      name: "Inception",
-      year: 2010,
-      rate: 8.8,
-      ratePeople: 1981603,
-      imageLing: "./src/assets/1.jpg",
-      genres: "Drama, Crime",
-      count: "9",
-    },
-    {
-      id: 7,
-      name: "Inception",
-      year: 2010,
-      rate: 8.8,
-      ratePeople: 1981603,
-      imageLing: "./src/assets/1.jpg",
-      genres: "Drama, Crime",
-      count: "9",
-    },
-    {
-      id: 8,
-      name: "Inception",
-      year: 2010,
-      rate: 8.8,
-      ratePeople: 1981603,
-      imageLing: "./src/assets/1.jpg",
-      genres: "Drama, Crime",
-      count: "9",
-    },
-  ];
+  const getTotalPages = () => {
+    return Math.ceil(favoriteMovies.length / FILMS_PER_PAGE);
+  };
+
+  const getGenreNames = (genreArray: Genre[]): string => {
+    return genreArray.map((el: Genre) => el.name).join(', ');
+  };
+
 
   return (
     <>
-      {data.length > 0 ? (
+      <Flex justify="space-between" align="center">
+        <h1>Favorite Movies</h1>
+        <SearchComponent />
+      </Flex>
+      {favoriteMovies.length > 0 ? (
         <>
-          <Flex justify="space-between" align="center">
-            <h1>Rated movies</h1>
-            <SearchComponent />
-          </Flex>
           <Flex wrap="wrap" gap={10} pb={20}>
-            {data.map((movie) => (
-              <CardMovie key={movie.id} {...movie} />
+            {favoriteMovies.map((movie) => (
+              <CardMovie
+                id={movie.id}
+                name={movie.original_title}
+                year={new Date(movie.release_date).getFullYear()}
+                rate={movie.vote_average}
+                ratePeople={0}
+                imageLink={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                genres={getGenreNames(movie.genres)}
+                count={""}
+              />
             ))}
           </Flex>
           <Pagination
             style={{ display: 'flex', justifyContent: "center" }}
-            total={getTotalCountPage()}
+            total={getTotalPages()}
             value={activePage}
-            onChange={setPage}
+            onChange={handlePageChange}
           />
         </>
       ) : (
@@ -102,10 +85,12 @@ export const RatedView = () => {
           style={{ minHeight: '92vh', textAlign: 'center' }}
         >
           <img src="./src/assets/loading.svg" alt="No movies illustration" style={{ maxWidth: '400px', marginBottom: '20px' }} />
-          <Text size="lg" w={500} mb="sm" fw={600}>You haven't rated any films yet</Text>
+          <Text size="lg" w={500} mb="sm" fw={600}>You haven't added any movies to your favorites yet</Text>
           <Button variant="outline" className="purple-btn">Find movies</Button>
         </Flex>
       )}
     </>
   );
 };
+
+export default RatedView;

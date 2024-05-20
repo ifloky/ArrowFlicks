@@ -60,13 +60,13 @@ export const MainPageView: React.FC = () => {
 
   return (
     <div>
+      <h1>Movies</h1>
+      <FilterForm />
+      <Sort />
       {error ? (
         <h2>{error}</h2>
       ) : movies.length > 0 ? (
         <div>
-          <h1>Movies</h1>
-          <FilterForm />
-          <Sort />
           <Flex gap="10" wrap="wrap">
             {movies.map((movie) => (
               <CardMovie
@@ -75,7 +75,7 @@ export const MainPageView: React.FC = () => {
                 year={new Date(movie.release_date).getFullYear()}
                 rate={movie.vote_average}
                 ratePeople={0}
-                imageLing={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                imageLink={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 genres={getGenreNames(movie.genre_ids)}
                 count={""}
                 {...movie}
