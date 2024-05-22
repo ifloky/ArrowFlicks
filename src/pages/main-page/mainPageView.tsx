@@ -6,10 +6,9 @@ import FilterForm from '../../features/filter-form/filter-form';
 import CustomPagination from '../../features/pagination/PaginationComponent';
 import { getMovies, getGenres } from '../../api/api';
 
-interface Movie {
+interface MovieData {
   original_title: string;
   id: number;
-  title: string;
   overview: string;
   poster_path: string;
   release_date: string;
@@ -25,7 +24,7 @@ interface Genre {
 export const MainPageView: React.FC = () => {
   const TOTAL_ITEMS = 10000;
 
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const [movies, setMovies] = useState<MovieData[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -34,9 +33,9 @@ export const MainPageView: React.FC = () => {
   useEffect(() => {
     const fetchMoviesAndGenres = async () => {
       try {
-        const [moviesData, genresData] = await Promise.all([getMovies(currentPage), getGenres()]);
+        const moviesData = await getMovies(currentPage);
+        const genresData = await getGenres();
         setMovies(moviesData.results);
-        console.log(moviesData.total_results);
         setTotalPages(Math.ceil(moviesData.total_results / 20));
         setGenres(genresData.genres);
       } catch (error) {
@@ -71,6 +70,7 @@ export const MainPageView: React.FC = () => {
             {movies.map((movie) => (
               <CardMovie
                 key={movie.id}
+                id={movie.id}
                 name={movie.original_title}
                 year={new Date(movie.release_date).getFullYear()}
                 rate={movie.vote_average}
@@ -78,7 +78,6 @@ export const MainPageView: React.FC = () => {
                 imageLink={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 genres={getGenreNames(movie.genre_ids)}
                 count={""}
-                {...movie}
               />
             ))}
           </Flex>
@@ -94,3 +93,5 @@ export const MainPageView: React.FC = () => {
     </div>
   );
 };
+
+export default MainPageView;
